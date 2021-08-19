@@ -76,29 +76,12 @@ namespace h_LoadingLayer {
         return AY_OBFUSCATE("Welcome to GDPS Editor 2.2!");
 		}
 }
-
-
-namespace h_MoreOptionsLayer {
-// addtoggle def
-int addToggle(const char* display, const char* key, const char* extraInfo);
-    
-void* (*o_anit)(CCLayer*);
-void* anit(CCLayer* self) {
-
-     auto ret = o_anit(self);
-    
-     self->addToggle("Enable information for levels", "0109", "when is enabled you can see all level info from robtop");
-     self->addToggle("Enable FPS Counter", "0116", "When enabled, your current FPS will be showed while in the menus and playing levels");
-    
-     return ret;
-    
-   }
-}*/
+*/
 
 __attribute__((constructor))
 void fdml_init() {
     hook("_ZN9MenuLayer4initEv", h_menuLayer, init, o_init);
 	//hook("_ZN12LoadingLayer16getLoadingStringEv", h_LoadingLayer, enit, o_enit);
-	//hook("_ZN16MoreOptionsLayer4initEv", h_MoreOptionsLayer, anit, o_anit);
+	hook("_ZN16MoreOptionsLayer4initEv", MoreOptionsLayer, MoreOptionsLayer_initHook, MoreOptionsLayer_init);
     inlineHookAll();
 }
